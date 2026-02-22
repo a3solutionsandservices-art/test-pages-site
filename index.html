@@ -1,11 +1,1317 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>GitHub Pages Test</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Momentum AI Coach</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Premium dark mode inspired by Strava/Nike */
+            --color-bg-primary: #000000;
+            --color-bg-secondary: #121212;
+            --color-bg-elevated: #1c1c1e;
+            --color-bg-card: #1c1c1e;
+            --color-text-primary: #ffffff;
+            --color-text-secondary: #a8a8a8;
+            --color-text-muted: #6e6e73;
+            --color-accent: #fc5200;
+            --color-accent-hover: #ff6b1f;
+            --color-accent-glow: rgba(252, 82, 0, 0.3);
+            --color-success: #30d158;
+            --color-success-glow: rgba(48, 209, 88, 0.2);
+            --color-warning: #ff9f0a;
+            --color-danger: #ff453a;
+            --color-premium-gold: #ffd60a;
+            --color-border: rgba(255, 255, 255, 0.08);
+            --color-border-hover: rgba(255, 255, 255, 0.16);
+            --font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+            --font-family-brand: 'Bebas Neue', 'Impact', 'Arial Black', sans-serif;
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.5);
+            --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.6);
+            --shadow-glow: 0 0 32px var(--color-accent-glow);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background: var(--color-bg-primary);
+            color: var(--color-text-primary);
+            line-height: 1.6;
+            padding: 0;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            max-width: 440px;
+            margin: 0 auto;
+            padding: 0 20px 32px 20px;
+        }
+
+        .header {
+            text-align: left;
+            margin-bottom: 32px;
+            padding: 48px 0 0 0;
+        }
+
+        .header h1 {
+            font-size: 56px;
+            font-weight: 900;
+            margin-bottom: 8px;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, #ffffff 0%, #fc5200 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-family: var(--font-family-brand);
+            text-transform: uppercase;
+            justify-content: flex-start;
+        }
+
+        .header .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 3px;
+            position: relative;
+        }
+
+        .chevron {
+            width: 0;
+            height: 0;
+            border-top: 20px solid transparent;
+            border-bottom: 20px solid transparent;
+            border-left: 12px solid;
+            animation: chevronSlide 1.5s ease-in-out infinite;
+        }
+
+        .chevron:nth-child(1) {
+            border-left-color: rgba(252, 82, 0, 0.4);
+            animation-delay: 0s;
+        }
+
+        .chevron:nth-child(2) {
+            border-left-color: rgba(252, 82, 0, 0.7);
+            animation-delay: 0.15s;
+        }
+
+        .chevron:nth-child(3) {
+            border-left-color: rgba(252, 82, 0, 1);
+            animation-delay: 0.3s;
+        }
+
+        .chevron-right {
+            width: 0;
+            height: 0;
+            border-top: 20px solid transparent;
+            border-bottom: 20px solid transparent;
+            border-left: 12px solid;
+            animation: chevronSlideRight 1.5s ease-in-out infinite;
+        }
+
+        .chevron-right:nth-child(1) {
+            border-left-color: rgba(252, 82, 0, 0.4);
+            animation-delay: 0s;
+        }
+
+        .chevron-right:nth-child(2) {
+            border-left-color: rgba(252, 82, 0, 0.7);
+            animation-delay: 0.15s;
+        }
+
+        .chevron-right:nth-child(3) {
+            border-left-color: rgba(252, 82, 0, 1);
+            animation-delay: 0.3s;
+        }
+
+        @keyframes chevronSlide {
+            0%, 100% { 
+                transform: translateX(0);
+                opacity: 0.4;
+            }
+            50% { 
+                transform: translateX(4px);
+                opacity: 1;
+            }
+        }
+
+        @keyframes chevronSlideRight {
+            0%, 100% { 
+                transform: translateX(0);
+                opacity: 0.4;
+            }
+            50% { 
+                transform: translateX(4px);
+                opacity: 1;
+            }
+        }
+
+        @keyframes glowPulse {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 0.6; }
+        }
+
+        .header p {
+            color: var(--color-text-secondary);
+            font-size: 16px;
+            font-weight: 500;
+            letter-spacing: -0.3px;
+            margin-left: 0;
+        }
+
+        .streak-display {
+            background: linear-gradient(135deg, rgba(252, 82, 0, 0.15), rgba(255, 159, 10, 0.08));
+            border-radius: 24px;
+            padding: 32px 28px;
+            margin-bottom: 32px;
+            text-align: center;
+            border: 2px solid rgba(252, 82, 0, 0.3);
+            box-shadow: var(--shadow-md), 0 0 60px rgba(252, 82, 0, 0.2), inset 0 2px 0 rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+            animation: streakGlow 4s ease-in-out infinite;
+        }
+
+        @keyframes streakGlow {
+            0%, 100% { box-shadow: var(--shadow-md), 0 0 40px rgba(252, 82, 0, 0.2), inset 0 2px 0 rgba(255, 255, 255, 0.1); }
+            50% { box-shadow: var(--shadow-md), 0 0 80px rgba(252, 82, 0, 0.4), inset 0 2px 0 rgba(255, 255, 255, 0.15); }
+        }
+
+        .streak-display::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 200%;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, #fc5200, #ff9f0a, #fc5200, transparent);
+            animation: shimmer 3s linear infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .streak-display::after {
+            content: '🔥';
+            position: absolute;
+            font-size: 120px;
+            opacity: 0.08;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+
+        .streak-number {
+            font-size: 72px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ffffff 0%, #ff6b1f 40%, #fc5200 60%, #ff9f0a 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+            letter-spacing: -3px;
+            line-height: 1;
+            filter: drop-shadow(0 4px 12px rgba(252, 82, 0, 0.3));
+            animation: numberPop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+            z-index: 1;
+        }
+
+        @keyframes numberPop {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .streak-label {
+            color: var(--color-text-primary);
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .screen {
+            display: none;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        .card {
+            background: var(--color-bg-card);
+            border-radius: 20px;
+            padding: 28px 24px;
+            margin-bottom: 20px;
+            border: 1px solid var(--color-border);
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .card:active {
+            transform: scale(0.99);
+        }
+
+        .card h2 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            color: var(--color-text-primary);
+            letter-spacing: -0.3px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--color-text-secondary);
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .slider-container {
+            position: relative;
+            margin-top: 12px;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            height: 8px;
+            border-radius: 4px;
+            background: var(--color-bg-elevated);
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--color-accent);
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 2px 8px rgba(252, 82, 0, 0.4), 0 0 0 4px rgba(252, 82, 0, 0.12);
+        }
+
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.15);
+            box-shadow: 0 4px 12px rgba(252, 82, 0, 0.5), 0 0 0 6px rgba(252, 82, 0, 0.15);
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--color-accent);
+            cursor: pointer;
+            border: none;
+        }
+
+        .slider-value {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 8px;
+            font-size: 12px;
+            color: var(--color-text-muted);
+        }
+
+        .current-value {
+            color: var(--color-accent);
+            font-weight: 600;
+        }
+
+        .mood-selector {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .mood-btn {
+            flex: 1;
+            padding: 20px 8px;
+            border: 1.5px solid var(--color-border);
+            background: var(--color-bg-elevated);
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            text-align: center;
+            position: relative;
+        }
+
+        .mood-btn:active {
+            transform: scale(0.95);
+        }
+
+        .mood-btn.selected {
+            border-color: var(--color-accent);
+            background: rgba(252, 82, 0, 0.12);
+            box-shadow: 0 0 0 3px rgba(252, 82, 0, 0.15), var(--shadow-glow);
+            transform: translateY(-2px);
+        }
+
+        .mood-emoji {
+            font-size: 32px;
+            display: block;
+            margin-bottom: 6px;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+        }
+
+        .mood-btn:hover .mood-emoji {
+            transform: scale(1.15);
+        }
+
+        .mood-btn.selected .mood-emoji {
+            transform: scale(1.25) rotate(10deg);
+            animation: emojiWiggle 0.5s ease-in-out;
+        }
+
+        @keyframes emojiWiggle {
+            0%, 100% { transform: scale(1.25) rotate(0deg); }
+            25% { transform: scale(1.3) rotate(-10deg); }
+            75% { transform: scale(1.3) rotate(10deg); }
+        }
+
+        .mood-label {
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--color-text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .mood-btn.selected .mood-label {
+            color: var(--color-accent);
+        }
+
+        select {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1.5px solid var(--color-border);
+            background: var(--color-bg-elevated);
+            color: var(--color-text-primary);
+            border-radius: 14px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%23a8a8a8' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            padding-right: 44px;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: var(--color-accent);
+            background-color: rgba(252, 82, 0, 0.04);
+            box-shadow: 0 0 0 3px rgba(252, 82, 0, 0.12);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #fc5200 0%, #ff6b1f 100%);
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 17px;
+            box-shadow: var(--shadow-md), 0 0 32px rgba(252, 82, 0, 0.3);
+            letter-spacing: -0.3px;
+            border-radius: 16px;
+            padding: 18px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s;
+        }
+
+        .btn-primary:hover::before {
+            transform: translateX(100%);
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #ff6b1f 0%, #ff9f0a 100%);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg), 0 0 48px rgba(252, 82, 0, 0.5);
+        }
+
+        .btn-primary:active {
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-sm), 0 0 24px rgba(252, 82, 0, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--color-bg-elevated);
+            color: var(--color-text-primary);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #30d158 0%, #20b648 100%);
+            color: white;
+            font-weight: 700;
+            border-radius: 16px;
+            padding: 18px;
+            box-shadow: var(--shadow-md), 0 0 24px rgba(48, 209, 88, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-success::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s;
+        }
+
+        .btn-success:hover::before {
+            transform: translateX(100%);
+        }
+
+        .btn-success:hover {
+            background: linear-gradient(135deg, #20b648 0%, #10a037 100%);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg), 0 0 40px rgba(48, 209, 88, 0.5);
+        }
+
+        .btn-success:active {
+            transform: translateY(-1px);
+        }
+
+        .workout-card {
+            background: var(--color-bg-card);
+            border-radius: 24px;
+            padding: 32px 24px;
+            margin-bottom: 24px;
+            border: 1.5px solid var(--color-accent);
+            box-shadow: var(--shadow-md), 0 0 40px rgba(252, 82, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .workout-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--color-accent), var(--color-warning));
+        }
+
+        .workout-header {
+            margin-bottom: 20px;
+        }
+
+        .workout-title {
+            font-size: 26px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--color-accent), var(--color-warning));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+        }
+
+        .workout-duration {
+            color: var(--color-text-secondary);
+            font-size: 14px;
+        }
+
+        .motivation-message {
+            background: linear-gradient(135deg, rgba(252, 82, 0, 0.08), rgba(252, 82, 0, 0.04));
+            border-left: 3px solid var(--color-accent);
+            padding: 20px;
+            border-radius: 16px;
+            margin-bottom: 28px;
+            font-style: italic;
+            color: var(--color-text-secondary);
+            font-size: 15px;
+            line-height: 1.6;
+            letter-spacing: -0.1px;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+        }
+
+        .workout-details {
+            margin-bottom: 20px;
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--color-bg-elevated);
+        }
+
+        .detail-item:last-child {
+            border-bottom: none;
+        }
+
+        .detail-icon {
+            margin-right: 16px;
+            font-size: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            background: rgba(252, 82, 0, 0.1);
+            border-radius: 12px;
+            flex-shrink: 0;
+        }
+
+        .detail-text {
+            flex: 1;
+        }
+
+        .detail-label {
+            font-size: 12px;
+            color: var(--color-text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .detail-value {
+            font-size: 14px;
+            color: var(--color-text-primary);
+            font-weight: 500;
+        }
+
+        .urgency-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 12px;
+        }
+
+        .urgency-high {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--color-danger);
+        }
+
+        .urgency-medium {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--color-warning);
+        }
+
+        .urgency-low {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--color-success);
+        }
+
+        .progress-section {
+            margin-top: 32px;
+        }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .stat-box {
+            background: var(--color-bg-elevated);
+            padding: 20px 16px;
+            border-radius: 16px;
+            text-align: center;
+            border: 1px solid var(--color-border);
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.2s ease;
+        }
+
+        .stat-box:active {
+            transform: scale(0.97);
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--color-accent), var(--color-warning));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 4px;
+            letter-spacing: -1px;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: var(--color-text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            font-weight: 600;
+        }
+
+        .timeline {
+            margin-top: 24px;
+        }
+
+        .timeline-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 0;
+        }
+
+        .timeline-date {
+            width: 80px;
+            font-size: 12px;
+            color: var(--color-text-muted);
+        }
+
+        .timeline-bar {
+            flex: 1;
+            height: 8px;
+            background: var(--color-bg-elevated);
+            border-radius: 4px;
+            margin: 0 12px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .timeline-fill {
+            height: 100%;
+            background: var(--color-success);
+            border-radius: 4px;
+            transition: width 0.5s;
+        }
+
+        .timeline-status {
+            width: 60px;
+            text-align: right;
+            font-size: 12px;
+            color: var(--color-text-secondary);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card, .workout-card {
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @media (max-width: 480px) {
+            .mood-selector {
+                flex-wrap: wrap;
+            }
+
+            .mood-btn {
+                flex-basis: calc(20% - 10px);
+            }
+
+            .stat-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
-  <h1>It works!</h1>
-  <p>If you see this, GitHub Pages is configured correctly.</p>
+    <div class="container">
+        <div class="header">
+            <h1>
+                Momentum
+                <span class="logo">
+                    <span class="chevron-right"></span>
+                    <span class="chevron-right"></span>
+                    <span class="chevron-right"></span>
+                    <span class="chevron-right"></span>
+                    <span class="chevron-right"></span>
+                    <span class="chevron-right"></span>
+                </span>
+            </h1>
+            <p>Impulse > Habit > Willpower > Action</p>
+        </div>
+
+        <div class="streak-display">
+            <div class="streak-number" id="streakNumber">0</div>
+            <div class="streak-label">Day Streak 🔥</div>
+        </div>
+
+        <!-- Check-in Screen -->
+        <div class="screen active" id="checkInScreen">
+            <div class="card">
+                <h2>Quick Check-in (30 seconds)</h2>
+                
+                <div class="input-group">
+                    <label>How's your energy today?</label>
+                    <div class="mood-selector">
+                        <div class="mood-btn" data-mood="exhausted" onclick="selectMood('exhausted')">
+                            <span class="mood-emoji">😴</span>
+                            <span class="mood-label">Exhausted</span>
+                        </div>
+                        <div class="mood-btn" data-mood="tired" onclick="selectMood('tired')">
+                            <span class="mood-emoji">😮‍💨</span>
+                            <span class="mood-label">Tired</span>
+                        </div>
+                        <div class="mood-btn" data-mood="ok" onclick="selectMood('ok')">
+                            <span class="mood-emoji">😐</span>
+                            <span class="mood-label">OK</span>
+                        </div>
+                        <div class="mood-btn" data-mood="good" onclick="selectMood('good')">
+                            <span class="mood-emoji">😊</span>
+                            <span class="mood-label">Good</span>
+                        </div>
+                        <div class="mood-btn" data-mood="energized" onclick="selectMood('energized')">
+                            <span class="mood-emoji">🔥</span>
+                            <span class="mood-label">Energized</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="timeAvailable">Time available (minutes)</label>
+                    <div class="slider-container">
+                        <input type="range" id="timeAvailable" min="10" max="60" value="25" step="5" oninput="updateTimeValue(this.value)">
+                        <div class="slider-value">
+                            <span>10 min</span>
+                            <span class="current-value" id="timeValue">25 min</span>
+                            <span>60 min</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="location">Where are you?</label>
+                    <select id="location">
+                        <option value="home">Home</option>
+                        <option value="gym">Gym</option>
+                        <option value="office">Office</option>
+                        <option value="hotel">Hotel</option>
+                        <option value="outdoor">Outdoor</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="weather">What's the weather?</label>
+                    <select id="weather">
+                        <option value="sunny">Sunny ☀️</option>
+                        <option value="cloudy">Cloudy ☁️</option>
+                        <option value="rainy">Rainy 🌧️</option>
+                        <option value="cold">Cold ❄️</option>
+                        <option value="hot">Hot 🔥</option>
+                    </select>
+                </div>
+
+                <button class="btn btn-primary" onclick="generateWorkout()">Get My Workout Plan 💪</button>
+            </div>
+        </div>
+
+        <!-- Workout Screen -->
+        <div class="screen" id="workoutScreen">
+            <div class="workout-card">
+                <div class="workout-header">
+                    <div class="workout-title" id="workoutTitle">Your Personalized Workout</div>
+                    <div class="workout-duration" id="workoutDuration">20 minutes</div>
+                    <div id="urgencyBadge"></div>
+                </div>
+
+                <div class="motivation-message" id="motivationMessage">
+                    "You showed up. That's the only victory that matters today."
+                </div>
+
+                <div class="workout-details">
+                    <div class="detail-item">
+                        <span class="detail-icon">🎯</span>
+                        <div class="detail-text">
+                            <div class="detail-label">Workout Type</div>
+                            <div class="detail-value" id="workoutType">Gentle Movement</div>
+                        </div>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-icon">📍</span>
+                        <div class="detail-text">
+                            <div class="detail-label">Location</div>
+                            <div class="detail-value" id="workoutLocation">Home</div>
+                        </div>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-icon">🛠️</span>
+                        <div class="detail-text">
+                            <div class="detail-label">Equipment</div>
+                            <div class="detail-value" id="workoutEquipment">None needed</div>
+                        </div>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-icon">💡</span>
+                        <div class="detail-text">
+                            <div class="detail-label">Focus</div>
+                            <div class="detail-value" id="workoutFocus">Rebuild momentum gently</div>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn btn-success" onclick="completeWorkout()">✓ I Completed This Workout</button>
+                <button class="btn btn-secondary" onclick="showCheckIn()">← Choose Different Options</button>
+            </div>
+        </div>
+
+        <!-- Progress Screen -->
+        <div class="screen" id="progressScreen">
+            <div class="card">
+                <h2>🎉 Workout Completed!</h2>
+                
+                <div class="motivation-message">
+                    "You just practiced the most important skill - keeping promises to yourself."
+                </div>
+
+                <div class="stat-grid">
+                    <div class="stat-box">
+                        <div class="stat-value" id="totalWorkouts">1</div>
+                        <div class="stat-label">Total Workouts</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value" id="thisWeek">1</div>
+                        <div class="stat-label">This Week</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value" id="thisMonth">1</div>
+                        <div class="stat-label">This Month</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value" id="consistency">100%</div>
+                        <div class="stat-label">Consistency</div>
+                    </div>
+                </div>
+
+                <div class="timeline">
+                    <h3 style="margin-bottom: 16px; font-size: 16px;">Last 7 Days</h3>
+                    <div id="timelineContainer"></div>
+                </div>
+
+                <button class="btn btn-primary" onclick="showCheckIn()">Plan Next Workout</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // State management
+        let state = {
+            currentScreen: 'checkInScreen',
+            selectedMood: null,
+            streak: 0,
+            totalWorkouts: 0,
+            lastWorkoutDate: null,
+            workoutHistory: []
+        };
+
+        // Load saved data from localStorage
+        function loadData() {
+            try {
+                const saved = localStorage.getItem('momentumAI');
+                if (saved) {
+                    const data = JSON.parse(saved);
+                    state = {...state, ...data};
+                } else {
+                    // First time user - initialize with defaults
+                    state = {
+                        ...state,
+                        streak: 0,
+                        totalWorkouts: 0,
+                        lastWorkoutDate: null,
+                        workoutHistory: []
+                    };
+                }
+            } catch (e) {
+                console.error('Error loading data:', e);
+            }
+            updateStreakDisplay();
+        }
+
+        // Save data to localStorage
+        function saveData() {
+            try {
+                const dataToSave = {
+                    streak: state.streak,
+                    totalWorkouts: state.totalWorkouts,
+                    lastWorkoutDate: state.lastWorkoutDate,
+                    workoutHistory: state.workoutHistory
+                };
+                localStorage.setItem('momentumAI', JSON.stringify(dataToSave));
+            } catch (e) {
+                console.error('Error saving data:', e);
+            }
+        }
+
+        // Update streak display
+        function updateStreakDisplay() {
+            document.getElementById('streakNumber').textContent = state.streak;
+        }
+
+        // Mood selection
+        function selectMood(mood) {
+            document.querySelectorAll('.mood-btn').forEach(btn => btn.classList.remove('selected'));
+            document.querySelector(`[data-mood="${mood}"]`).classList.add('selected');
+            state.selectedMood = mood;
+        }
+
+        // Update time value display
+        function updateTimeValue(value) {
+            document.getElementById('timeValue').textContent = value + ' min';
+        }
+
+        // Generate workout based on inputs
+        function generateWorkout() {
+            if (!state.selectedMood) {
+                alert('Please select your energy level');
+                return;
+            }
+
+            const energy = state.selectedMood;
+            const time = parseInt(document.getElementById('timeAvailable').value);
+            const location = document.getElementById('location').value;
+            const weather = document.getElementById('weather').value;
+
+            // Calculate days since last workout (REAL date logic)
+            const today = new Date();
+            let daysSinceWorkout = 0;
+            
+            if (state.lastWorkoutDate) {
+                const lastDate = new Date(state.lastWorkoutDate);
+                const currentDate = new Date(today);
+                // Reset time to midnight for accurate day calculation
+                lastDate.setHours(0, 0, 0, 0);
+                currentDate.setHours(0, 0, 0, 0);
+                daysSinceWorkout = Math.floor((currentDate - lastDate) / (1000 * 60 * 60 * 24));
+            } else {
+                // First time user - no gap
+                daysSinceWorkout = 0;
+            }
+
+            // Track event
+            trackEvent('workout_generated', {
+                energy: energy,
+                timeAvailable: time,
+                location: location,
+                weather: weather,
+                daysSinceWorkout: daysSinceWorkout
+            });
+
+            // Workout matching algorithm
+            let workout = matchWorkout(energy, time, location, weather, daysSinceWorkout);
+
+            // Update UI
+            document.getElementById('workoutTitle').textContent = workout.title;
+            document.getElementById('workoutDuration').textContent = workout.duration + ' minutes';
+            document.getElementById('workoutType').textContent = workout.type;
+            document.getElementById('workoutLocation').textContent = location.charAt(0).toUpperCase() + location.slice(1);
+            document.getElementById('workoutEquipment').textContent = workout.equipment;
+            document.getElementById('workoutFocus').textContent = workout.focus;
+            document.getElementById('motivationMessage').textContent = workout.motivation;
+
+            // Urgency badge
+            const urgencyBadge = document.getElementById('urgencyBadge');
+            if (daysSinceWorkout >= 3) {
+                urgencyBadge.innerHTML = `<span class="urgency-badge urgency-high">⚠️ ${daysSinceWorkout}-day gap detected</span>`;
+            } else if (daysSinceWorkout >= 2) {
+                urgencyBadge.innerHTML = `<span class="urgency-badge urgency-medium">⏰ Keep momentum going</span>`;
+            } else {
+                urgencyBadge.innerHTML = `<span class="urgency-badge urgency-low">✨ Building consistency</span>`;
+            }
+
+            showScreen('workoutScreen');
+        }
+
+        // Workout matching algorithm
+        function matchWorkout(energy, time, location, weather, daysSinceWorkout) {
+            // Low energy + long gap = Nurturing mode
+            if ((energy === 'exhausted' || energy === 'tired') && daysSinceWorkout >= 3) {
+                return {
+                    title: 'Gentle Recovery Flow',
+                    duration: Math.min(time, 20),
+                    type: 'Restorative Yoga + Breathwork',
+                    equipment: 'None needed',
+                    focus: 'Rebuild momentum gently',
+                    motivation: '"Your body has been asking for this. 20 minutes of gentle movement is the gift it needs. You always feel better after - let\'s trust that pattern."'
+                };
+            }
+
+            // Hotel + limited time + stress = Travel reset
+            if (location === 'hotel' && time < 25) {
+                return {
+                    title: 'Travel Stress Reset',
+                    duration: 15,
+                    type: 'HIIT Bodyweight Circuit',
+                    equipment: 'None needed',
+                    focus: 'Channel stress into power',
+                    motivation: '"Channel that stress into power. This 15-minute burst will reset your nervous system and give you back control of your day."'
+                };
+            }
+
+            // Low mood + good weather + outdoor = Mood boost
+            if ((energy === 'tired' || energy === 'ok') && (weather === 'sunny' || weather === 'cloudy') && (location === 'outdoor' || location === 'home')) {
+                return {
+                    title: 'Mood-Boost Walk & Move',
+                    duration: 20,
+                    type: 'Outdoor Walk + Movement',
+                    equipment: 'None needed',
+                    focus: 'Natural mood elevation',
+                    motivation: '"Sunlight + movement = natural antidepressant. Research shows just 20 minutes outside improves mood by 35%."'
+                };
+            }
+
+            // High energy + gym + good time = Peak performance
+            if ((energy === 'energized' || energy === 'good') && location === 'gym' && time >= 45) {
+                return {
+                    title: 'Peak Performance Session',
+                    duration: time,
+                    type: 'Strength Training',
+                    equipment: 'Gym equipment',
+                    focus: 'Progressive overload & growth',
+                    motivation: '"You\'re firing on all cylinders today - let\'s build. This is when you get stronger. Your future self will thank you for showing up at peak capacity."'
+                };
+            }
+
+            // Office + limited time = Quick reset
+            if (location === 'office' && time <= 20) {
+                return {
+                    title: 'Office Energy Reset',
+                    duration: 15,
+                    type: 'Movement Snack + Stretching',
+                    equipment: 'None needed',
+                    focus: 'Energy & posture boost',
+                    motivation: '"15 minutes to transform your afternoon. Break the sitting cycle, boost blood flow, return to work sharper."'
+                };
+            }
+
+            // Cold weather = Indoor cardio
+            if (weather === 'cold' || weather === 'rainy') {
+                return {
+                    title: 'Indoor Cardio Flow',
+                    duration: Math.min(time, 30),
+                    type: 'Bodyweight Cardio Circuit',
+                    equipment: 'None needed',
+                    focus: 'Heart health & warmth',
+                    motivation: '"Weather won\'t stop you. This indoor session will warm you up from the inside and prove your commitment is stronger than circumstances."'
+                };
+            }
+
+            // Default balanced workout
+            return {
+                title: 'Balanced Movement Session',
+                duration: time,
+                type: 'Mixed Cardio & Strength',
+                equipment: location === 'gym' ? 'Gym equipment' : 'Bodyweight',
+                focus: 'Full-body fitness',
+                motivation: '"Consistency over intensity. You showed up again - that\'s the pattern that changes everything."'
+            };
+        }
+
+        // Complete workout
+        function completeWorkout() {
+            const today = new Date().toISOString().split('T')[0];
+            
+            // Update streak
+            if (state.lastWorkoutDate) {
+                const lastDate = new Date(state.lastWorkoutDate);
+                const currentDate = new Date(today);
+                const diffDays = Math.floor((currentDate - lastDate) / (1000 * 60 * 60 * 24));
+                
+                if (diffDays === 1) {
+                    state.streak++;
+                } else if (diffDays > 1) {
+                    state.streak = 1;
+                }
+            } else {
+                state.streak = 1;
+            }
+
+            state.lastWorkoutDate = today;
+            state.totalWorkouts++;
+            state.workoutHistory.push(today);
+
+            // Save to localStorage
+            saveData();
+
+            // Track event
+            trackEvent('workout_completed', {
+                streak: state.streak,
+                totalWorkouts: state.totalWorkouts,
+                energy: state.selectedMood,
+                location: document.getElementById('location').value
+            });
+
+            // Update stats
+            document.getElementById('totalWorkouts').textContent = state.totalWorkouts;
+            updateStreakDisplay();
+            updateStats();
+            updateTimeline();
+
+            showScreen('progressScreen');
+        }
+
+        // Update statistics
+        function updateStats() {
+            const today = new Date();
+            const thisWeek = state.workoutHistory.filter(date => {
+                const d = new Date(date);
+                const diffDays = Math.floor((today - d) / (1000 * 60 * 60 * 24));
+                return diffDays < 7;
+            }).length;
+
+            const thisMonth = state.workoutHistory.filter(date => {
+                const d = new Date(date);
+                return d.getMonth() === today.getMonth() && d.getFullYear() === today.getFullYear();
+            }).length;
+
+            const consistency = Math.round((thisWeek / 7) * 100);
+
+            document.getElementById('thisWeek').textContent = thisWeek;
+            document.getElementById('thisMonth').textContent = thisMonth;
+            document.getElementById('consistency').textContent = consistency + '%';
+        }
+
+        // Update timeline
+        function updateTimeline() {
+            const container = document.getElementById('timelineContainer');
+            const today = new Date();
+            let html = '';
+
+            for (let i = 6; i >= 0; i--) {
+                const date = new Date(today);
+                date.setDate(date.getDate() - i);
+                const dateStr = date.toISOString().split('T')[0];
+                const hasWorkout = state.workoutHistory.includes(dateStr);
+                const dayName = date.toLocaleDateString('en-US', { weekday: 'short' });
+
+                html += `
+                    <div class="timeline-item">
+                        <div class="timeline-date">${dayName}</div>
+                        <div class="timeline-bar">
+                            <div class="timeline-fill" style="width: ${hasWorkout ? '100%' : '0%'}"></div>
+                        </div>
+                        <div class="timeline-status">${hasWorkout ? '✓' : '-'}</div>
+                    </div>
+                `;
+            }
+
+            container.innerHTML = html;
+        }
+
+        // Screen navigation
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
+            state.currentScreen = screenId;
+        }
+
+        function showCheckIn() {
+            showScreen('checkInScreen');
+        }
+
+        // Simple analytics tracking
+        function trackEvent(eventName, eventData = {}) {
+            // Console logging for development
+            console.log('EVENT:', eventName, eventData);
+            
+            // Basic event storage for beta testing
+            try {
+                const events = JSON.parse(localStorage.getItem('momentumAI_events') || '[]');
+                events.push({
+                    event: eventName,
+                    data: eventData,
+                    timestamp: new Date().toISOString()
+                });
+                // Keep only last 100 events
+                if (events.length > 100) events.shift();
+                localStorage.setItem('momentumAI_events', JSON.stringify(events));
+            } catch (e) {
+                console.error('Error tracking event:', e);
+            }
+
+            // Google Analytics integration (add your GA4 tracking ID)
+            if (typeof gtag !== 'undefined') {
+                gtag('event', eventName, eventData);
+            }
+        }
+
+        // Export analytics data for review
+        function exportAnalytics() {
+            const events = localStorage.getItem('momentumAI_events');
+            const userData = localStorage.getItem('momentumAI');
+            const exportData = {
+                events: JSON.parse(events || '[]'),
+                userData: JSON.parse(userData || '{}'),
+                exportedAt: new Date().toISOString()
+            };
+            console.log('Analytics Export:', exportData);
+            return exportData;
+        }
+
+        // Make export function available globally for testing
+        window.exportAnalytics = exportAnalytics;
+
+        // Initialize
+        loadData();
+        
+        // Track app load
+        trackEvent('app_loaded', {
+            returning_user: state.totalWorkouts > 0,
+            current_streak: state.streak
+        });
+        
+        // Set default mood to "ok" for demo
+        setTimeout(() => {
+            selectMood('ok');
+        }, 500);
+    </script>
 </body>
 </html>
